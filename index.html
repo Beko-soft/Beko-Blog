@@ -3,51 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beko'nun Statik Blogu</title>
+    <title>Beko'nun Blogu</title>
 
     <style>
         body { 
             font-family: Arial, sans-serif; 
-            margin: 20px; 
-            background-color: #1e1e1e; /* Koyu tema için arka plan */
-            color: #d4d4d4; /* Açık renkli yazı */
+            margin: 0; 
+            padding: 20px;
+            background-color: #ffc45c; /* Turuncu Arka Plan Rengi */
+            color: #1e1e1e;
         }
         h1 { 
-            color: #4CAF50; /* Yeşilimsi başlık rengi */
-        }
-        h2 {
-            color: #d4d4d4;
-            border-bottom: 2px solid #383838;
+            color: #1e1e1e;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid black;
+            display: inline-block;
             padding-bottom: 5px;
+            margin-left: 50%;
+            transform: translateX(-50%);
         }
-        #blog-list ul { 
-            list-style: none; 
-            padding: 0; 
+
+        /* YAZILARIMIZ BÖLÜMÜ YOK, DOĞRUDAN IZGARA */
+        
+        /* Izgara Konteyneri */
+        #blog-grid {
+            display: grid;
+            /* Ekran genişliğine göre 200px genişliğinde en az 2 sütun oluşturur */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; /* Kutucuklar arası boşluk */
+            list-style: none;
+            padding: 0;
+            max-width: 1200px; 
+            margin: 0 auto;
         }
-        #blog-list li { 
-            margin-bottom: 5px; 
+
+        /* Kutucuk Stili */
+        #blog-grid li {
+            background-color: #4a4a4a; /* Gri kutu rengi */
+            border-radius: 10px; /* Yuvarlak köşeler */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            overflow: hidden; 
+            transition: transform 0.2s;
+            min-height: 100px; /* Kutucukların minimum yüksekliği */
         }
-        #blog-list a { 
+
+        /* Link Stili */
+        #blog-grid a { 
             text-decoration: none; 
-            color: #64b5f6; /* Mavi link rengi */
+            color: #ffc45c; /* Yazı Rengi (Turuncu) */
             font-weight: bold; 
             display: block;
-            padding: 8px 10px;
-            background-color: #2e2e2e;
-            border-radius: 4px;
+            padding: 15px; /* Kutucuk içi boşluk */
+            height: 100%; 
+            box-sizing: border-box;
+            line-height: 1.5;
         }
-        #blog-list a:hover { 
-            background-color: #3a3a3a;
-            text-decoration: none; 
+
+        #blog-grid a::before {
+            content: "> "; /* > İşareti */
+            color: #ffc45c;
         }
+
+        #blog-grid li:hover { 
+            transform: translateY(-5px); /* Hover efekti */
+            background-color: #555555;
+            cursor: pointer;
+        }
+
         /* Blog içeriği alanı */
         #blog-content { 
-            margin-top: 30px; 
+            margin-top: 50px; 
             padding: 20px; 
-            border: 1px solid #4CAF50; 
-            background-color: #252526; 
+            border: 1px solid #1e1e1e; 
+            background-color: #2e2e2e; 
+            color: #d4d4d4;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
             border-radius: 5px;
         }
+
         /* Markdown içeriği için stil */
         #blog-content code {
             background-color: #3a3a3a;
@@ -65,10 +101,11 @@
     </style>
 </head>
 <body>
-    <h1>Beko'nun Statik Blog Listesi</h1>
-    <div id="blog-list">
-        <h2>Yazılarımız</h2>
-        <ul></ul>
+    <h1>Beko'nun Blogu</h1>
+    
+    <div id="blog-list-container">
+        <ul id="blog-grid">
+            </ul>
     </div>
 
     <div id="blog-content">
