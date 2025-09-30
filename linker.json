@@ -1,10 +1,7 @@
 [
     {
-        "title": "İlk Deneme Yazısı",
-        "file": "post/blog1.md" // Bu şekilde olmalı
-    },
-    {
-        "title": "Statik Blogun Avantajları",
-        "file": "blog2.md"
+        "title": "İlk Deneme Yazısı Başlığı",
+        "file": "post/blog1.md"
     }
+    // DİKKAT: Artık altında başka kayıt olmadığı için bu nesnenin sonunda VİRGÜL OLMAMALIDIR!
 ]
