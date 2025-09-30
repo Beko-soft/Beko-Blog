@@ -6,135 +6,143 @@
     <title>Beko'nun Blogu</title>
 
     <style>
-    /* ==================== GENEL STİLLER ve ARKA PLAN ==================== */
-    body { 
-        font-family: Arial, sans-serif; 
-        margin: 0; 
-        padding: 20px;
-        background-color: #ffc45c; /* Turuncu Arka Plan Rengi */
-        color: #1e1e1e; /* Body'nin genel yazı rengi (şu an fazla kullanılmıyor) */
-    }
-    h1 { 
-        color: #1e1e1e; /* Ana Başlık rengi */
-        text-align: center;
-        margin-bottom: 40px;
-        border-bottom: 3px solid black;
-        display: inline-block;
-        padding-bottom: 5px;
-        margin-left: 50%;
-        transform: translateX(-50%);
-    }
+        /* ==================== GENEL STİLLER ve ARKA PLAN ==================== */
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            background-color: #ffc45c; /* Turuncu Arka Plan Rengi */
+            color: #1e1e1e;
+        }
+        h1 { 
+            color: #1e1e1e;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid black;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
 
-    /* ==================== BLOG LİSTESİ (IZGARA) STİLLERİ ==================== */
-    #blog-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-        gap: 20px;
-        list-style: none;
-        padding: 0;
-        max-width: 1200px; 
-        margin: 0 auto;
-    }
+        /* ==================== BLOG LİSTESİ (IZGARA) STİLLERİ ==================== */
+        #blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
 
-    /* Kutucuk Stili */
-    #blog-grid li {
-        background-color: #4a4a4a; /* Gri kutu rengi */
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        transition: transform 0.2s;
-        min-height: 100px;
-    }
+        /* Kutucuk Stili */
+        #blog-grid li {
+            background-color: #4a4a4a; /* Gri kutu rengi */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            min-height: 100px;
+        }
 
-    /* Link Stili (YAZI BAŞLIKLARI BURADA DÜZELTİLDİ) */
-    #blog-grid a { 
-        text-decoration: none; 
-        color: #FFFFFF; /* GÖRÜNÜRLÜK İÇİN BEYAZ YAPILDI */
-        font-weight: bold; 
-        display: block;
-        padding: 15px;
-        height: 100%; 
-        box-sizing: border-box;
-        line-height: 1.5;
-    }
+        /* Link Stili */
+        #blog-grid a { 
+            text-decoration: none; 
+            color: #FFFFFF; /* GÖRÜNÜRLÜK İÇİN BEYAZ YAPILDI */
+            font-weight: bold; 
+            display: block;
+            padding: 15px;
+            height: 100%; 
+            box-sizing: border-box;
+            line-height: 1.5;
+        }
 
-    #blog-grid a::before {
-        content: "> "; 
-        color: #ffc45c; /* İşaret Turuncu kalabilir */
-    }
+        #blog-grid a::before {
+            content: "> "; 
+            color: #ffc45c; 
+        }
 
-    #blog-grid li:hover { 
-        transform: translateY(-5px);
-        background-color: #555555;
-        cursor: pointer;
-    }
+        #blog-grid li:hover { 
+            transform: translateY(-5px);
+            background-color: #555555;
+            cursor: pointer;
+        }
 
-    /* ==================== AÇILIR İÇERİK (MODAL) STİLLERİ ==================== */
-    #blog-content-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.95);
-        z-index: 1000;
-        overflow-y: auto;
-        padding: 40px 0;
-    }
-    
-    #blog-content-header {
-        max-width: 800px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        color: #ffc45c; /* Modal Başlığı Beyaz Yapıldı */
-    }
-    
-    /* İçerik Kutusu Stili */
-    #blog-content { 
-        margin-top: 10px; 
-        padding: 20px; 
-        border: 1px solid #4CAF50; 
-        background-color: #252526; 
-        color: #E0E0E0; /* Modal İçeriği Yazı Rengi Açık Gri Yapıldı */
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 5px;
-    }
+        /* ==================== AÇILIR İÇERİK (MODAL) STİLLERİ ==================== */
+        #blog-content-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px 0;
+        }
+        
+        #blog-content-header {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: #ffc45c; /* Modal Başlığı (Hosgeldiniz!) Turuncu Yapıldı */
+        }
+        
+        /* İçerik Kutusu Stili */
+        #blog-content { 
+            margin-top: 10px; 
+            padding: 20px; 
+            border: 1px solid #4CAF50; 
+            background-color: #252526; 
+            color: #E0E0E0; /* Modal İçeriği Yazı Rengi Açık Gri */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+        }
 
-    /* Kapatma Düğmesi Stili (Aynı kaldı) */
-    #close-post-btn {
-        background-color: transparent;
-        color: #ffc45c;
-        border: 2px solid #ffc45c;
-        border-radius: 5px;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 5px 10px;
-        transition: background-color 0.2s;
-    }
-    #close-post-btn:hover {
-        background-color: #ffc45c;
-        color: black;
-    }
+        /* MODAL İÇİNDEKİ BAŞLIKLAR (Markdown H1, H2 vb.) DÜZELTİLDİ */
+        #blog-content h1, 
+        #blog-content h2,
+        #blog-content h3,
+        #blog-content h4 {
+            color: #ffc45c; /* Tüm Başlıklar Turuncu Yapıldı */
+        }
+        
+        /* Kapatma Düğmesi Stili */
+        #close-post-btn {
+            background-color: transparent;
+            color: #ffc45c;
+            border: 2px solid #ffc45c;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.2s;
+        }
+        #close-post-btn:hover {
+            background-color: #ffc45c;
+            color: black;
+        }
 
-    /* Markdown İçeriği Stilleri (Aynı kaldı) */
-    #blog-content code {
-        background-color: #3a3a3a;
-        color: #FFCC66;
-        padding: 2px 4px;
-        border-radius: 3px;
-    }
-    #blog-content pre {
-        background-color: #000000;
-        padding: 10px;
-        overflow-x: auto;
-        border-radius: 4px;
-        color: #d4d4d4;
-    }
-</style>
+        /* Markdown İçeriği Stilleri */
+        #blog-content code {
+            background-color: #3a3a3a;
+            color: #FFCC66;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        #blog-content pre {
+            background-color: #000000;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+            color: #d4d4d4;
+        }
+    </style>
 </head>
 <body>
     <h1>Beko'nun Blogu</h1>
@@ -152,8 +160,7 @@
         </div>
 
         <div id="blog-content">
-            <p>Lütfen listeden bir yazı seçin.</p>
-        </div>
+            </div>
         
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
