@@ -4,15 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beko'nun Blogu</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; }
-        #blog-list ul { list-style: none; padding: 0; }
-        #blog-list li { margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #eee; }
-        #blog-list a { text-decoration: none; color: royalblue; font-weight: bold; }
-        #blog-list a:hover { text-decoration: underline; }
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: #1e1e1e; /* Koyu tema için arka plan */
+            color: #d4d4d4; /* Açık renkli yazı */
+        }
+        h1 { 
+            color: #4CAF50; /* Yeşilimsi başlık rengi */
+        }
+        h2 {
+            color: #d4d4d4;
+            border-bottom: 2px solid #383838;
+            padding-bottom: 5px;
+        }
+        #blog-list ul { 
+            list-style: none; 
+            padding: 0; 
+        }
+        #blog-list li { 
+            margin-bottom: 5px; 
+        }
+        #blog-list a { 
+            text-decoration: none; 
+            color: #64b5f6; /* Mavi link rengi */
+            font-weight: bold; 
+            display: block;
+            padding: 8px 10px;
+            background-color: #2e2e2e;
+            border-radius: 4px;
+        }
+        #blog-list a:hover { 
+            background-color: #3a3a3a;
+            text-decoration: none; 
+        }
         /* Blog içeriği alanı */
-        #blog-content { margin-top: 30px; padding: 20px; border: 1px solid #ccc; background-color: #f9f9f9; }
+        #blog-content { 
+            margin-top: 30px; 
+            padding: 20px; 
+            border: 1px solid #4CAF50; 
+            background-color: #252526; 
+            border-radius: 5px;
+        }
+        /* Markdown içeriği için stil */
+        #blog-content code {
+            background-color: #3a3a3a;
+            color: #FFCC66;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        #blog-content pre {
+            background-color: #000000;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
