@@ -1,7 +1,7 @@
 [
     {
         "title": "İlk Deneme Yazısı",
-        "file": "blog1.md"
+        "file": "post/blog1.md" // Bu şekilde olmalı
     },
     {
         "title": "Statik Blogun Avantajları",
