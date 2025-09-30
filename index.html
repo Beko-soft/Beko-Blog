@@ -6,6 +6,7 @@
     <title>Beko'nun Blogu</title>
 
     <style>
+        /* ==================== GENEL STİLLER ve ARKA PLAN ==================== */
         body { 
             font-family: Arial, sans-serif; 
             margin: 0; 
@@ -24,9 +25,7 @@
             transform: translateX(-50%);
         }
 
-        /* YAZILARIMIZ BÖLÜMÜ YOK, DOĞRUDAN IZGARA */
-        
-        /* Izgara Konteyneri */
+        /* ==================== BLOG LİSTESİ (IZGARA) STİLLERİ ==================== */
         #blog-grid {
             display: grid;
             /* Ekran genişliğine göre 200px genişliğinde en az 2 sütun oluşturur */
@@ -43,7 +42,6 @@
             background-color: #4a4a4a; /* Gri kutu rengi */
             border-radius: 10px; /* Yuvarlak köşeler */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            overflow: hidden; 
             transition: transform 0.2s;
             min-height: 100px; /* Kutucukların minimum yüksekliği */
         }
@@ -54,7 +52,7 @@
             color: #ffc45c; /* Yazı Rengi (Turuncu) */
             font-weight: bold; 
             display: block;
-            padding: 15px; /* Kutucuk içi boşluk */
+            padding: 15px;
             height: 100%; 
             box-sizing: border-box;
             line-height: 1.5;
@@ -71,20 +69,60 @@
             cursor: pointer;
         }
 
-        /* Blog içeriği alanı */
+        /* ==================== AÇILIR İÇERİK (MODAL) STİLLERİ ==================== */
+        /* Yeni konteyneri varsayılan olarak gizle, JS ile açılacak */
+        #blog-content-container {
+            position: fixed; /* Sayfayı kaplaması için */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); /* Yarı saydam siyah arka plan */
+            z-index: 1000;
+            overflow-y: auto; /* İçerik taşarsa kaydırılabilir olsun */
+            padding: 40px 0;
+        }
+        
+        #blog-content-header {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: #d4d4d4; /* Başlık rengi */
+        }
+        
+        /* İçerik Kutusu Stili */
         #blog-content { 
-            margin-top: 50px; 
+            margin-top: 10px; 
             padding: 20px; 
-            border: 1px solid #1e1e1e; 
-            background-color: #2e2e2e; 
+            border: 1px solid #4CAF50; 
+            background-color: #252526; 
             color: #d4d4d4;
-            max-width: 1200px;
+            max-width: 800px; /* İçerik genişliği */
             margin-left: auto;
             margin-right: auto;
             border-radius: 5px;
         }
 
-        /* Markdown içeriği için stil */
+        /* Kapatma Düğmesi Stili */
+        #close-post-btn {
+            background-color: transparent;
+            color: #ffc45c;
+            border: 2px solid #ffc45c;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: background-color 0.2s;
+        }
+        #close-post-btn:hover {
+            background-color: #ffc45c;
+            color: black;
+        }
+
+        /* Markdown İçeriği Stilleri */
         #blog-content code {
             background-color: #3a3a3a;
             color: #FFCC66;
@@ -108,10 +146,18 @@
             </ul>
     </div>
 
-    <div id="blog-content">
-        <p>Lütfen listeden bir yazı seçin.</p>
-    </div>
+    <div id="blog-content-container" style="display: none;">
+        
+        <div id="blog-content-header">
+            <h2 id="post-title"></h2>
+            <button id="close-post-btn">X</button>
+        </div>
 
+        <div id="blog-content">
+            <p>Lütfen listeden bir yazı seçin.</p>
+        </div>
+        
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="blog.js"></script>
