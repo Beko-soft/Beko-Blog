@@ -22,23 +22,27 @@
             <h1>LABORATUVAR: Python Web IDE</h1>
             <p><strong>Vizyon:</strong> Python kodlarını tarayıcıda çalıştıran (Wasm) bir entegre geliştirme ortamı.</p>
 
-            <div id="ide-container">
+            <div id="ide-status-message">
+                Pyodide (Python Yorumlayıcısı) Yükleniyor... Lütfen bekleyin.
+            </div>
+
+            <div id="ide-container" class="hidden">
                 <div id="code-editor-area">
                     <h2>KOD YAZ</h2>
                     <textarea id="python-code-input" rows="15" placeholder="# Python Kodunuzu Buraya Yazın...
 print('Merhaba Beko!')
 x = 5 + 3
 print(f'Sonuç: {x}')"></textarea>
-                    <button id="run-code-btn">▶ Kodu Çalıştır</button>
+                    <button id="run-code-btn" disabled>▶ Kodu Çalıştır (Yükleniyor...)</button>
                 </div>
                 
                 <div id="code-output-area">
                     <h2>ÇIKTI</h2>
-                    <pre id="python-code-output">Çıktı burada görünecek.</pre>
+                    <pre id="python-code-output">Pyodide başarıyla yüklendiğinde, çıktılar burada görünecek.</pre>
                 </div>
             </div>
             
-            <p class="warning-text">**Not:** Çalıştırma işlevi (WebAssembly entegrasyonu) şu an için sadece frontend tasarımıdır.</p>
+            <p class="warning-text">**Not:** Bu IDE, Python kodlarını tarayıcınızda çalıştırmak için WebAssembly (Pyodide) kullanır.</p>
         </section>
 
         <section id="blog" class="page-content hidden-page">
@@ -64,6 +68,7 @@ print(f'Sonuç: {x}')"></textarea>
         </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="animation.js"></script>
 </body>
