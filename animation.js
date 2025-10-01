@@ -1,31 +1,38 @@
 // ==================== DOM ELEMANLARI ====================
 const navButtons = document.querySelectorAll('.nav-btn');
 const pages = document.querySelectorAll('.page-content');
-const listElement = document.querySelector('#blog-grid');
+const blogGridElement = document.getElementById('blog-grid');
+const labsGridElement = document.getElementById('labs-grid'); 
+const sozlukContentElement = document.getElementById('sozluk-content'); 
 const contentContainer = document.getElementById('blog-content-container');
 const contentElement = document.getElementById('blog-content');
 const postTitleElement = document.getElementById('post-title');
-// const underline = document.getElementById('blog-underline'); <--- KALDIRILDI
 
 
-// ==================== NAVİGASYON ANİMASYON FONKSİYONU <--- TAMAMEN KALDIRILDI
+// ==================== NAVİGASYON VE SAYFA DEĞİŞTİRME MANTIĞI ====================
 
+function setActivePage(targetId) {
+    // Sayfa Görünürlüğünü Değiştir
+    pages.forEach(page => {
+        page.classList.add('hidden-page');
+        page.classList.remove('active-page');
+    });
+    const targetPage = document.getElementById(targetId);
+    if (targetPage) {
+        targetPage.classList.remove('hidden-page');
+        targetPage.classList.add('active-page');
+    }
+}
 
-// ==================== SAYFA DEĞİŞTİRME MANTIĞI ====================
 navButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
         const targetId = button.getAttribute('data-target');
 
-        // 1. Sayfa Görünürlüğünü Değiştir
-        pages.forEach(page => {
-            page.classList.add('hidden-page');
-            page.classList.remove('active-page');
-        });
-        document.getElementById(targetId).classList.remove('hidden-page');
-        document.getElementById(targetId).classList.add('active-page');
+        // Sayfayı değiştir
+        setActivePage(targetId);
         
-        // 2. Buton Stilini Değiştir (Burada transform/büyütme CSS ile otomatik çalışır)
+        // Buton Stilini Değiştir (Büyütme/Vurgu)
         navButtons.forEach(btn => btn.classList.remove('active-nav-btn'));
         button.classList.add('active-nav-btn');
     });
@@ -34,24 +41,24 @@ navButtons.forEach(button => {
 
 // ==================== BAŞLANGIÇ AYARI (DOM YÜKLENDİĞİNDE) ====================
 document.addEventListener('DOMContentLoaded', () => {
-    // Başlangıç butonunu bul ve aktif stilini ver
+    // Başlangıçta Laboratuvar'ı seç
     const initialButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
-    
     if (initialButton) {
         initialButton.classList.add('active-nav-btn');
+        setActivePage('laboratuvar'); 
     }
+    
+    // Uygulama başlangıcında tüm dinamik içerikleri yükle
+    initializeBlog();
+    initializeLabs();
+    loadSozlukContent();
 });
 
 
-// ==================== BLOG İŞLEVLERİ (DEĞİŞMEDİ) ====================
+// =========================================================
+// 1. BLOG İŞLEVLERİ (Konu Etiketi Entegrasyonu)
+// =========================================================
 
-// Kapatma işlevi
-document.getElementById('close-post-btn').addEventListener('click', () => {
-    contentContainer.classList.add('hidden-modal'); 
-    document.body.style.overflow = 'auto'; 
-});
-
-// JSON çekme ve liste oluşturma
 function initializeBlog() {
     fetch('linker.json')
         .then(response => {
@@ -64,8 +71,22 @@ function initializeBlog() {
             data.forEach(post => {
                 const listItem = document.createElement('li');
                 const link = document.createElement('a');
+                
+                // 1. Konu etiketini oluştur (KONU EKLEMESİ)
+                const konu = (post.konu || 'genel').toLowerCase();
+                const tagSpan = document.createElement('span');
+                tagSpan.textContent = konu;
+                tagSpan.classList.add('post-tag', `tag-${konu}`); 
 
-                link.textContent = post.title;
+                // 2. Başlık metnini oluştur
+                const titleText = document.createElement('span');
+                titleText.textContent = post.title;
+                titleText.style.fontSize = '1.2em'; 
+
+                // Linke hem başlığı hem etiketi ekle
+                link.appendChild(titleText);
+                link.appendChild(tagSpan);
+
                 link.href = '#';
 
                 link.addEventListener('click', (e) => {
@@ -74,16 +95,15 @@ function initializeBlog() {
                 });
 
                 listItem.appendChild(link);
-                listElement.appendChild(listItem);
+                blogGridElement.appendChild(listItem);
             });
         })
         .catch(error => {
-            console.error('Liste yükleme hatası:', error);
-            listElement.innerHTML = `<p style="color: red; text-align: center;">Blog listesi yüklenemedi. 'linker.json' dosyasını kontrol edin.</p>`;
+            console.error('Blog Liste yükleme hatası:', error);
+            blogGridElement.innerHTML = `<p style="color: red; text-align: center;">Blog listesi yüklenemedi. 'linker.json' dosyasını kontrol edin.</p>`;
         });
 }
 
-// Blog içeriğini yükleme
 function loadBlogPost(filename, title) {
     fetch(filename)
         .then(response => {
@@ -111,5 +131,64 @@ function loadBlogPost(filename, title) {
         });
 }
 
-// Uygulama başlangıcında blog listesini yükle
-initializeBlog();
+document.getElementById('close-post-btn').addEventListener('click', () => {
+    contentContainer.classList.add('hidden-modal'); 
+    document.body.style.overflow = 'auto'; 
+});
+
+
+// =========================================================
+// 2. LABORATUVAR İŞLEVLERİ (labs.json - WASM IDE Vurgusu)
+// =========================================================
+
+function initializeLabs() {
+    fetch('labs.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`labs.json yüklenemedi: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            data.forEach(project => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+
+                link.innerHTML = `<strong>${project.title}</strong><br><small>${project.description}</small>`;
+                link.href = project.link; 
+                link.target = '_blank'; 
+
+                listItem.appendChild(link);
+                labsGridElement.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Laboratuvar Liste yükleme hatası:', error);
+            labsGridElement.innerHTML = `<p style="color: red; text-align: center;">Laboratuvar projeleri yüklenemedi. 'labs.json' dosyasını kontrol edin.</p>`;
+        });
+}
+
+// =========================================================
+// 3. SÖZLÜK İŞLEVLERİ (data/sozluk.md)
+// =========================================================
+
+// Sözlük içeriğini yükleme (Sayfalama alanı boş bırakıldı)
+function loadSozlukContent() {
+    fetch('data/sozluk.md')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`'sozluk.md' dosyası 'data/' klasöründe bulunamadı.`);
+            }
+            return response.text();
+        })
+        .then(markdownText => {
+            const htmlContent = marked.parse(markdownText);
+            sozlukContentElement.innerHTML = htmlContent;
+            
+            // NOT: Sayfalama mantığı buraya eklenecektir.
+        })
+        .catch(error => {
+            console.error('Sözlük Yükleme Hatası:', error);
+            sozlukContentElement.innerHTML = `<p style="color: red; text-align: center;">Sözlük içeriği yüklenemedi: ${error.message}</p>`;
+        });
+}
