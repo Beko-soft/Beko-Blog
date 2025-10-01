@@ -3,168 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beko'nun Blogu</title>
+    <title>Beko'nun Laboratuvarı ve Blogu</title>
 
-    <style>
-        /* ==================== GENEL STİLLER ve ARKA PLAN ==================== */
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 0; 
-            padding: 20px;
-            background-color: #ffc45c; /* Turuncu Arka Plan Rengi */
-            color: #1e1e1e;
-        }
-        h1 { 
-            color: #1e1e1e;
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 3px solid black;
-            display: inline-block;
-            padding-bottom: 5px;
-            margin-left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* ==================== BLOG LİSTESİ (IZGARA) STİLLERİ ==================== */
-        #blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px;
-            list-style: none;
-            padding: 0;
-            max-width: 1200px; 
-            margin: 0 auto;
-        }
-
-        /* Kutucuk Stili */
-        #blog-grid li {
-            background-color: #4a4a4a; /* Gri kutu rengi */
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s;
-            min-height: 100px;
-        }
-
-        /* Link Stili */
-        #blog-grid a { 
-            text-decoration: none; 
-            color: #FFFFFF; /* GÖRÜNÜRLÜK İÇİN BEYAZ YAPILDI */
-            font-weight: bold; 
-            display: block;
-            padding: 15px;
-            height: 100%; 
-            box-sizing: border-box;
-            line-height: 1.5;
-        }
-
-        #blog-grid a::before {
-            content: "> "; 
-            color: #ffc45c; 
-        }
-
-        #blog-grid li:hover { 
-            transform: translateY(-5px);
-            background-color: #555555;
-            cursor: pointer;
-        }
-
-        /* ==================== AÇILIR İÇERİK (MODAL) STİLLERİ ==================== */
-        #blog-content-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 40px 0;
-        }
-        
-        #blog-content-header {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            color: #ffc45c; /* Modal Başlığı (Hosgeldiniz!) Turuncu Yapıldı */
-        }
-        
-        /* İçerik Kutusu Stili */
-        #blog-content { 
-            margin-top: 10px; 
-            padding: 20px; 
-            border: 1px solid #4CAF50; 
-            background-color: #252526; 
-            color: #E0E0E0; /* Modal İçeriği Yazı Rengi Açık Gri */
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 5px;
-        }
-
-        /* MODAL İÇİNDEKİ BAŞLIKLAR (Markdown H1, H2 vb.) DÜZELTİLDİ */
-        #blog-content h1, 
-        #blog-content h2,
-        #blog-content h3,
-        #blog-content h4 {
-            color: #ffc45c; /* Tüm Başlıklar Turuncu Yapıldı */
-        }
-        
-        /* Kapatma Düğmesi Stili */
-        #close-post-btn {
-            background-color: transparent;
-            color: #ffc45c;
-            border: 2px solid #ffc45c;
-            border-radius: 5px;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px 10px;
-            transition: background-color 0.2s;
-        }
-        #close-post-btn:hover {
-            background-color: #ffc45c;
-            color: black;
-        }
-
-        /* Markdown İçeriği Stilleri */
-        #blog-content code {
-            background-color: #3a3a3a;
-            color: #FFCC66;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        #blog-content pre {
-            background-color: #000000;
-            padding: 10px;
-            overflow-x: auto;
-            border-radius: 4px;
-            color: #d4d4d4;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Beko'nun Blogu</h1>
     
-    <div id="blog-list-container">
-        <ul id="blog-grid">
-            </ul>
-    </div>
+    <header id="main-nav">
+        <nav>
+            <a href="#" class="nav-btn" data-target="laboratuvar">LABORATUVAR</a>
+            <a href="#" class="nav-btn" data-target="blog">BLOG</a>
+            <a href="#" class="nav-btn" data-target="sozluk">SÖZLÜK</a>
+        </nav>
+        <div id="blog-underline" class="underline"></div> </header>
 
-    <div id="blog-content-container" style="display: none;">
+    <main id="content-area">
+        <section id="laboratuvar" class="page-content active-page">
+            <h1>LABORATUVAR</h1>
+            <p>Simulasyonlarım ve web prototiplerim (Babylon.js, WebOS denemeleri vb.) bu alana gelecek.</p>
+            </section>
+
+        <section id="blog" class="page-content hidden-page">
+            <h1>BLOG</h1>
+            <ul id="blog-grid">
+                </ul>
+        </section>
+
+        <section id="sozluk" class="page-content hidden-page">
+            <h1>SÖZLÜK</h1>
+            <p>Terminoloji ve kelime tanımları burada listelenecek. Çok uzunsa sayfalama ekleyeceğiz.</p>
+            </section>
         
-        <div id="blog-content-header">
-            <h2 id="post-title"></h2>
-            <button id="close-post-btn">X</button>
-        </div>
-
-        <div id="blog-content">
+        <div id="blog-content-container" class="hidden-modal">
+            <div id="blog-content-header">
+                <h2 id="post-title"></h2>
+                <button id="close-post-btn">X</button>
             </div>
-        
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+            <div id="blog-content"></div>
+        </div>
+    </main>
 
-    <script src="blog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="animation.js"></script>
 </body>
 </html>
