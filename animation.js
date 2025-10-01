@@ -8,15 +8,17 @@ const contentElement = document.getElementById('blog-content');
 const postTitleElement = document.getElementById('post-title');
 
 // IDE Elemanları
+const ideContainer = document.getElementById('ide-container');
+const ideStatusMessage = document.getElementById('ide-status-message');
 const runButton = document.getElementById('run-code-btn');
 const codeInput = document.getElementById('python-code-input');
 const codeOutput = document.getElementById('python-code-output');
 
+let pyodide = null; // Pyodide yorumlayıcısını tutacak değişken
 
 // ==================== NAVİGASYON VE SAYFA DEĞİŞTİRME MANTIĞI ====================
 
 function setActivePage(targetId) {
-    // Sayfa Görünürlüğünü Değiştir
     pages.forEach(page => {
         page.classList.add('hidden-page');
         page.classList.remove('active-page');
@@ -53,25 +55,73 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeBlog();
     loadSozlukContent();
 
-    // Laboratuvar Çalıştır Butonu İşlevi (Şimdilik Simülasyon)
-    if(runButton && codeOutput) {
-        runButton.addEventListener('click', () => {
-            const code = codeInput.value.trim();
-            if (code === "") {
-                codeOutput.textContent = "Hata: Lütfen çalıştırmak için kod girin.";
-            } else {
-                codeOutput.textContent = `>>> Kod Çalıştırılıyor...
-[WASM SIMÜLASYON] Asıl kodun ilk satırı: ${code.split('\\n')[0]}
---------------------------------------------------
-[Çıktı (Simülasyon)] Merhaba Beko! Sonuç: 8`;
-            }
-        });
-    }
+    // Pyodide'yi başlat
+    initializePyodide();
 });
 
 
 // =========================================================
-// 1. BLOG İŞLEVLERİ (linker.json)
+// 1. LABORATUVAR IDE İŞLEVLERİ (Pyodide Wasm Entegrasyonu)
+// =========================================================
+
+async function initializePyodide() {
+    ideStatusMessage.textContent = "Pyodide (Python Yorumlayıcısı) Yükleniyor... Bu biraz sürebilir.";
+    
+    try {
+        // Pyodide'yi başlat ve global değişkene ata
+        pyodide = await loadPyodide();
+
+        // Başarılı yükleme durumunda IDE'yi göster ve butonu aktifleştir
+        ideStatusMessage.textContent = "Pyodide Yüklendi. Kod yazmaya hazırsın!";
+        ideStatusMessage.style.color = "#2ecc71"; // Yeşil mesaj
+        ideContainer.classList.remove('hidden');
+        runButton.disabled = false;
+        runButton.textContent = "▶ Kodu Çalıştır";
+
+        // Çalıştır butonunu Pyodide ile bağla
+        runButton.addEventListener('click', runPythonCode);
+        
+        codeOutput.textContent = "Pyodide 0.25.0 yüklendi. Artık Python kodunu çalıştırabilirsin.";
+
+    } catch (error) {
+        console.error("Pyodide Yükleme Hatası:", error);
+        ideStatusMessage.textContent = "Hata: Pyodide yüklenemedi. Lütfen internet bağlantınızı kontrol edin.";
+        ideStatusMessage.style.color = "#e74c3c"; // Kırmızı mesaj
+    }
+}
+
+function runPythonCode() {
+    if (!pyodide) {
+        codeOutput.textContent = "Hata: Python yorumlayıcısı henüz hazır değil.";
+        return;
+    }
+
+    const code = codeInput.value;
+    codeOutput.textContent = ">>> Kod Çalıştırılıyor...\n";
+    runButton.disabled = true;
+    runButton.textContent = "Çalışıyor...";
+
+    try {
+        // Pyodide'nin çıktı akışını (stdout) yakalamak için geçici bir mekanizma (Pyodide bunu otomatik olarak yapabilir)
+        const output = pyodide.runPython(code);
+        
+        // runPython'dan dönen değer varsa (örneğin son satır bir ifade ise) onu göster
+        if (output !== undefined) {
+            codeOutput.textContent += String(output) + "\n";
+        }
+        
+    } catch (err) {
+        // Hataları yakala ve çıktı alanında göster
+        codeOutput.textContent += "Hata:\n" + String(err);
+    } finally {
+        runButton.disabled = false;
+        runButton.textContent = "▶ Kodu Çalıştır";
+    }
+}
+
+
+// =========================================================
+// 2. BLOG İŞLEVLERİ (linker.json)
 // =========================================================
 
 function initializeBlog() {
@@ -150,12 +200,6 @@ document.getElementById('close-post-btn').addEventListener('click', () => {
     contentContainer.classList.add('hidden-modal'); 
     document.body.style.overflow = 'auto'; 
 });
-
-
-// =========================================================
-// 2. LABORATUVAR İŞLEVLERİ (labs.json SİLİNDİ)
-// =========================================================
-// initializeLabs() fonksiyonu kaldırıldı.
 
 
 // =========================================================
