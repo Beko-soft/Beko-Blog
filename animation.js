@@ -16,6 +16,14 @@ const codeOutput = document.getElementById('python-code-output');
 
 let pyodide = null; // Pyodide yorumlayıcısını tutacak değişken
 
+
+// ==================== PYODIDE ÇIKTI YÖNLENDİRME FONKSİYONLARI ====================
+
+// Pyodide'nin Python çıktılarını yakalamak için JS fonksiyonu
+function appendOutput(s) {
+    codeOutput.textContent += s;
+}
+
 // ==================== NAVİGASYON VE SAYFA DEĞİŞTİRME MANTIĞI ====================
 
 function setActivePage(targetId) {
@@ -61,36 +69,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // =========================================================
-// 1. LABORATUVAR IDE İŞLEVLERİ (Pyodide Wasm Entegrasyonu)
+// 1. LABORATUVAR IDE İŞLEVLERİ (Pyodide Wasm Gerçek Entegrasyon)
 // =========================================================
 
 async function initializePyodide() {
     ideStatusMessage.textContent = "Pyodide (Python Yorumlayıcısı) Yükleniyor... Bu biraz sürebilir.";
     
     try {
-        // Pyodide'yi başlat ve global değişkene ata
-        pyodide = await loadPyodide();
+        pyodide = await loadPyodide({
+            // Python'ın stdout ve stderr çıktılarını appendOutput fonksiyonuna yönlendirir.
+            stdout: appendOutput,
+            stderr: appendOutput
+        });
 
-        // Başarılı yükleme durumunda IDE'yi göster ve butonu aktifleştir
+        // Başarılı yükleme durumu
         ideStatusMessage.textContent = "Pyodide Yüklendi. Kod yazmaya hazırsın!";
-        ideStatusMessage.style.color = "#2ecc71"; // Yeşil mesaj
+        ideStatusMessage.style.color = "#2ecc71";
         ideContainer.classList.remove('hidden');
         runButton.disabled = false;
         runButton.textContent = "▶ Kodu Çalıştır";
 
-        // Çalıştır butonunu Pyodide ile bağla
         runButton.addEventListener('click', runPythonCode);
         
-        codeOutput.textContent = "Pyodide 0.25.0 yüklendi. Artık Python kodunu çalıştırabilirsin.";
+        codeOutput.textContent = "Pyodide 0.25.0 yüklendi. Artık Python kodunu çalıştırabilirsin.\n";
 
     } catch (error) {
         console.error("Pyodide Yükleme Hatası:", error);
         ideStatusMessage.textContent = "Hata: Pyodide yüklenemedi. Lütfen internet bağlantınızı kontrol edin.";
-        ideStatusMessage.style.color = "#e74c3c"; // Kırmızı mesaj
+        ideStatusMessage.style.color = "#e74c3c";
     }
 }
 
-function runPythonCode() {
+async function runPythonCode() {
     if (!pyodide) {
         codeOutput.textContent = "Hata: Python yorumlayıcısı henüz hazır değil.";
         return;
@@ -102,17 +112,14 @@ function runPythonCode() {
     runButton.textContent = "Çalışıyor...";
 
     try {
-        // Pyodide'nin çıktı akışını (stdout) yakalamak için geçici bir mekanizma (Pyodide bunu otomatik olarak yapabilir)
-        const output = pyodide.runPython(code);
+        // runPythonAsync'i kullanarak kodu çalıştır
+        await pyodide.runPythonAsync(code);
         
-        // runPython'dan dönen değer varsa (örneğin son satır bir ifade ise) onu göster
-        if (output !== undefined) {
-            codeOutput.textContent += String(output) + "\n";
-        }
-        
+        codeOutput.textContent += "\n>>> Program Sonlandı.\n";
+
     } catch (err) {
-        // Hataları yakala ve çıktı alanında göster
-        codeOutput.textContent += "Hata:\n" + String(err);
+        // Hata durumunda (Pyodide hatayı yakalayıp stdout/stderr'a yönlendirir)
+        codeOutput.textContent += "\n>>> Hata Oluştu. Çıktı kontrol edildi.\n";
     } finally {
         runButton.disabled = false;
         runButton.textContent = "▶ Kodu Çalıştır";
@@ -121,7 +128,7 @@ function runPythonCode() {
 
 
 // =========================================================
-// 2. BLOG İŞLEVLERİ (linker.json)
+// 2. BLOG İŞLEVLERİ (linker.json) - Aynı Kalıyor
 // =========================================================
 
 function initializeBlog() {
@@ -203,7 +210,7 @@ document.getElementById('close-post-btn').addEventListener('click', () => {
 
 
 // =========================================================
-// 3. SÖZLÜK İŞLEVLERİ (data/sozluk.md)
+// 3. SÖZLÜK İŞLEVLERİ (data/sozluk.md) - Aynı Kalıyor
 // =========================================================
 
 function loadSozlukContent() {
