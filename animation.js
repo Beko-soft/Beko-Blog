@@ -7,6 +7,11 @@ const contentContainer = document.getElementById('blog-content-container');
 const contentElement = document.getElementById('blog-content');
 const postTitleElement = document.getElementById('post-title');
 
+// IDE Elemanları
+const runButton = document.getElementById('run-code-btn');
+const codeInput = document.getElementById('python-code-input');
+const codeOutput = document.getElementById('python-code-output');
+
 
 // ==================== NAVİGASYON VE SAYFA DEĞİŞTİRME MANTIĞI ====================
 
@@ -28,10 +33,8 @@ navButtons.forEach(button => {
         e.preventDefault();
         const targetId = button.getAttribute('data-target');
 
-        // Sayfayı değiştir
         setActivePage(targetId);
         
-        // Buton Stilini Değiştir (Büyütme/Vurgu)
         navButtons.forEach(btn => btn.classList.remove('active-nav-btn'));
         button.classList.add('active-nav-btn');
     });
@@ -40,21 +43,35 @@ navButtons.forEach(button => {
 
 // ==================== BAŞLANGIÇ AYARI (DOM YÜKLENDİĞİNDE) ====================
 document.addEventListener('DOMContentLoaded', () => {
-    // Başlangıçta Laboratuvar'ı seç
     const initialButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
     if (initialButton) {
         initialButton.classList.add('active-nav-btn');
         setActivePage('laboratuvar'); 
     }
     
-    // Uygulama başlangıcında tüm dinamik içerikleri yükle
+    // Blog ve Sözlüğü yükle
     initializeBlog();
     loadSozlukContent();
+
+    // Laboratuvar Çalıştır Butonu İşlevi (Şimdilik Simülasyon)
+    if(runButton && codeOutput) {
+        runButton.addEventListener('click', () => {
+            const code = codeInput.value.trim();
+            if (code === "") {
+                codeOutput.textContent = "Hata: Lütfen çalıştırmak için kod girin.";
+            } else {
+                codeOutput.textContent = `>>> Kod Çalıştırılıyor...
+[WASM SIMÜLASYON] Asıl kodun ilk satırı: ${code.split('\\n')[0]}
+--------------------------------------------------
+[Çıktı (Simülasyon)] Merhaba Beko! Sonuç: 8`;
+            }
+        });
+    }
 });
 
 
 // =========================================================
-// 1. BLOG İŞLEVLERİ (Konu Etiketi Entegrasyonu)
+// 1. BLOG İŞLEVLERİ (linker.json)
 // =========================================================
 
 function initializeBlog() {
@@ -70,13 +87,13 @@ function initializeBlog() {
                 const listItem = document.createElement('li');
                 const link = document.createElement('a');
                 
-                // 1. Konu etiketini oluştur
+                // Konu etiketini oluştur
                 const konu = (post.konu || 'genel').toLowerCase();
                 const tagSpan = document.createElement('span');
                 tagSpan.textContent = konu;
                 tagSpan.classList.add('post-tag', `tag-${konu}`); 
 
-                // 2. Başlık metnini oluştur
+                // Başlık metnini oluştur
                 const titleText = document.createElement('span');
                 titleText.textContent = post.title;
                 titleText.style.fontSize = '1.2em'; 
@@ -136,18 +153,16 @@ document.getElementById('close-post-btn').addEventListener('click', () => {
 
 
 // =========================================================
-// 2. LABORATUVAR İŞLEVLERİ (labs.json KALDIRILDI)
+// 2. LABORATUVAR İŞLEVLERİ (labs.json SİLİNDİ)
 // =========================================================
-
-// initializeLabs() fonksiyonu kaldırıldı. Laboratuvar artık statik vizyon metni.
+// initializeLabs() fonksiyonu kaldırıldı.
 
 
 // =========================================================
-// 3. SÖZLÜK İŞLEVLERİ (data/sozluk.md Path Düzeltmesi)
+// 3. SÖZLÜK İŞLEVLERİ (data/sozluk.md)
 // =========================================================
 
 function loadSozlukContent() {
-    // data/sozluk.md dosyasını arar.
     fetch('data/sozluk.md') 
         .then(response => {
             if (!response.ok) {
