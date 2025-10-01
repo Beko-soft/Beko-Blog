@@ -20,12 +20,25 @@
     <main id="content-area">
         <section id="laboratuvar" class="page-content active-page">
             <h1>LABORATUVAR: Python Web IDE</h1>
-            <p><strong>Vizyon:</strong> Bu alan, WebAssembly (Wasm) kullanarak tarayıcı içinde çalışan Python kod editörüne dönüşecek. Otomatik tamamlama ve anında çalıştırma özelliği olacak.</p>
-            
-            <div id="labs-grid" class="content-grid">
+            <p><strong>Vizyon:</strong> Python kodlarını tarayıcıda çalıştıran (Wasm) bir entegre geliştirme ortamı.</p>
+
+            <div id="ide-container">
+                <div id="code-editor-area">
+                    <h2>KOD YAZ</h2>
+                    <textarea id="python-code-input" rows="15" placeholder="# Python Kodunuzu Buraya Yazın...
+print('Merhaba Beko!')
+x = 5 + 3
+print(f'Sonuç: {x}')"></textarea>
+                    <button id="run-code-btn">▶ Kodu Çalıştır</button>
                 </div>
+                
+                <div id="code-output-area">
+                    <h2>ÇIKTI</h2>
+                    <pre id="python-code-output">Çıktı burada görünecek.</pre>
+                </div>
+            </div>
             
-            <a href="#" class="lab-btn">>> Pyodide/Wasm Entegrasyonunu Başlat</a>
+            <p class="warning-text">**Not:** Çalıştırma işlevi (WebAssembly entegrasyonu) şu an için sadece frontend tasarımıdır.</p>
         </section>
 
         <section id="blog" class="page-content hidden-page">
