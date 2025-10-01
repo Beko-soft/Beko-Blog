@@ -14,7 +14,12 @@ function updateUnderline(targetButton) {
     
     // Alt çizgiyi seçilen butonun altına konumlandır ve genişliğini ayarla
     underline.style.width = `${rect.width}px`;
+    // Transformasyon ile çizginin başlangıç (left) pozisyonunu ayarla
+    // navRect.left, ana navigasyonun konumunu sıfırlamak için kullanılır.
     underline.style.transform = `translateX(${rect.left - navRect.left}px)`;
+    
+    // Çizginin görünür olduğundan emin ol
+    underline.style.opacity = '1';
 }
 
 // ==================== SAYFA DEĞİŞTİRME MANTIĞI ====================
@@ -26,6 +31,7 @@ navButtons.forEach(button => {
         // 1. Sayfa Görünürlüğünü Değiştir
         pages.forEach(page => {
             page.classList.add('hidden-page');
+            page.classList.remove('active-page');
         });
         document.getElementById(targetId).classList.remove('hidden-page');
         document.getElementById(targetId).classList.add('active-page');
@@ -39,20 +45,23 @@ navButtons.forEach(button => {
     });
 });
 
-// Başlangıçta 'LABORATUVAR' butonunu aktif yap ve alt çizgiyi ayarla
-const initialButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
-initialButton.classList.add('active-nav-btn');
-// İlk yüklemede, tarayıcı DOM'u yükledikten sonra alt çizgiyi ayarla
-window.addEventListener('load', () => {
-    // Navigasyonu LABARATUVAR'a ayarla
-    const initialBlogButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
-    if (initialBlogButton) {
-        updateUnderline(initialBlogButton);
+
+// ==================== BAŞLANGIÇ AYARI (DOM YÜKLENDİĞİNDE) ====================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Başlangıç butonunu bul
+    const initialButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
+    
+    if (initialButton) {
+        // 2. Butonu aktif stilini ver
+        initialButton.classList.add('active-nav-btn');
+        
+        // 3. Çizgiyi doğru konuma ayarla
+        updateUnderline(initialButton);
     }
 });
 
 
-// ==================== BLOG İŞLEVLERİ (ÖNCEKİ MANTIK) ====================
+// ==================== BLOG İŞLEVLERİ (DEĞİŞMEDİ) ====================
 
 // Kapatma işlevi
 document.getElementById('close-post-btn').addEventListener('click', () => {
