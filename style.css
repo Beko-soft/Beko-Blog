@@ -10,7 +10,7 @@ body {
 h1 {  
     color: #1e1e1e;
     text-align: center;
-    margin: 40px auto;
+    margin: 40px auto 20px auto;
     width: fit-content;
     border-bottom: 3px solid #1e1e1e;
     padding-bottom: 5px;
@@ -38,71 +38,79 @@ h1 {
     padding: 10px 20px;
     background-color: #925C1F; /* Koyu Kahve Arkaplan */
     border-radius: 5px;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s; /* Yeni: Transform için geçiş eklendi */
+    transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
 }
 .nav-btn:hover {
     background-color: #6d4416;
 }
-
-/* YENİ STİL: SEÇİLİ BUTON VURGUSU */
+/* SEÇİLİ BUTON VURGUSU */
 .active-nav-btn {
-    background-color: #6d4416; /* Seçili butonun rengi */
+    background-color: #6d4416; 
     transform: scale(1.05); /* HAFİF BÜYÜTME */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Hafif gölge ekleyerek daha belirgin yap */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 }
 
-/* ÇİZGİ KALDIRILDIĞI İÇİN BU STİLLER ÇIKARILDI */
-/*
-#blog-underline { display: none; }
-*/
-
-#content-area {
-    padding: 20px;
-    max-width: 1200px;  
-    margin: 0 auto;
-}
-
-/* ==================== BLOG LİSTESİ STİLLERİ (GERİ KALANI AYNI) ==================== */
-#blog-grid {
+/* ==================== İÇERİK IZGARASI VE KUTUCUK STİLİ ==================== */
+.content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 20px;
     list-style: none;
     padding: 0;
 }
-#blog-grid li {
+.content-grid li {
     background-color: #925C1F; 
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
     min-height: 100px;
+    position: relative;
 }
-#blog-grid a { 
+.content-grid a { 
     text-decoration: none; 
     color: #FFFFFF; 
     font-weight: bold; 
-    display: block;
+    display: flex; /* Etiket ve başlık için esnek düzen */
+    flex-direction: column; 
     padding: 15px;
     height: 100%; 
     box-sizing: border-box;
-    line-height: 1.5;
+    line-height: 1.4;
 }
-#blog-grid a::before {
-    content: ">> "; 
-    color: #ffc45c; 
-}
-#blog-grid li:hover { 
+.content-grid li:hover { 
     transform: translateY(-5px);
     background-color: #a06e33;
     cursor: pointer;
 }
 
-/* ==================== AÇILIR İÇERİK (MODAL) STİLLERİ AYNI ==================== */
+/* YENİ: BLOG KONU ETİKETİ STİLLERİ */
+.post-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-top: 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    align-self: flex-start; /* Sadece etiketi hizalar */
+}
+.tag-duyuru { background-color: #e74c3c; } /* Kırmızı */
+.tag-proje { background-color: #2ecc71; } /* Yeşil */
+.tag-genel { background-color: #3498db; } /* Mavi */
+
+/* ==================== DİĞER STİLLER AYNI ==================== */
+#content-area {
+    padding: 20px;
+    max-width: 1200px;  
+    margin: 0 auto;
+}
 .hidden-modal { display: none; }
+/* ... Geri kalan tüm Modal (blog-content-container) stilleri buraya dahil ... */
+/* Kod bloğu, başlık, kapatma butonu stilleri */
 #blog-content-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0, 0, 0, 0.95); z-index: 1000;
     overflow-y: auto; padding: 40px 0;
 }
@@ -116,9 +124,6 @@ h1 {
     color: #E0E0E0; max-width: 800px; margin-left: auto;
     margin-right: auto; border-radius: 5px;
 }
-#blog-content h1, #blog-content h2, #blog-content h3, #blog-content h4 {
-    color: #ffc45c; 
-}
 #close-post-btn {
     background-color: transparent; color: #ffc45c;
     border: 2px solid #ffc45c; border-radius: 5px;
@@ -127,12 +132,4 @@ h1 {
 }
 #close-post-btn:hover {
     background-color: #ffc45c; color: black;
-}
-#blog-content code {
-    background-color: #3a3a3a; color: #FFCC66;
-    padding: 2px 4px; border-radius: 3px;
-}
-#blog-content pre {
-    background-color: #000000; padding: 10px;
-    overflow-x: auto; border-radius: 4px; color: #d4d4d4;
 }
