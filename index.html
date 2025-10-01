@@ -15,24 +15,28 @@
             <a href="#" class="nav-btn" data-target="blog">BLOG</a>
             <a href="#" class="nav-btn" data-target="sozluk">SÖZLÜK</a>
         </nav>
-        <div id="blog-underline" class="underline"></div> </header>
+    </header>
 
     <main id="content-area">
         <section id="laboratuvar" class="page-content active-page">
             <h1>LABORATUVAR</h1>
-            <p>Simulasyonlarım ve web prototiplerim (Babylon.js, WebOS denemeleri vb.) bu alana gelecek.</p>
-            </section>
+            <div id="labs-grid" class="content-grid">
+                </div>
+        </section>
 
         <section id="blog" class="page-content hidden-page">
             <h1>BLOG</h1>
-            <ul id="blog-grid">
+            <ul id="blog-grid" class="content-grid">
                 </ul>
         </section>
 
         <section id="sozluk" class="page-content hidden-page">
             <h1>SÖZLÜK</h1>
-            <p>Terminoloji ve kelime tanımları burada listelenecek. Çok uzunsa sayfalama ekleyeceğiz.</p>
-            </section>
+            <div id="sozluk-content">
+                </div>
+            <div id="pagination-controls">
+                </div>
+        </section>
         
         <div id="blog-content-container" class="hidden-modal">
             <div id="blog-content-header">
