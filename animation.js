@@ -5,22 +5,11 @@ const listElement = document.querySelector('#blog-grid');
 const contentContainer = document.getElementById('blog-content-container');
 const contentElement = document.getElementById('blog-content');
 const postTitleElement = document.getElementById('post-title');
-const underline = document.getElementById('blog-underline');
+// const underline = document.getElementById('blog-underline'); <--- KALDIRILDI
 
-// ==================== NAVİGASYON ANİMASYON FONKSİYONU ====================
-function updateUnderline(targetButton) {
-    const rect = targetButton.getBoundingClientRect();
-    const navRect = document.getElementById('main-nav').getBoundingClientRect();
-    
-    // Alt çizgiyi seçilen butonun altına konumlandır ve genişliğini ayarla
-    underline.style.width = `${rect.width}px`;
-    // Transformasyon ile çizginin başlangıç (left) pozisyonunu ayarla
-    // navRect.left, ana navigasyonun konumunu sıfırlamak için kullanılır.
-    underline.style.transform = `translateX(${rect.left - navRect.left}px)`;
-    
-    // Çizginin görünür olduğundan emin ol
-    underline.style.opacity = '1';
-}
+
+// ==================== NAVİGASYON ANİMASYON FONKSİYONU <--- TAMAMEN KALDIRILDI
+
 
 // ==================== SAYFA DEĞİŞTİRME MANTIĞI ====================
 navButtons.forEach(button => {
@@ -36,27 +25,20 @@ navButtons.forEach(button => {
         document.getElementById(targetId).classList.remove('hidden-page');
         document.getElementById(targetId).classList.add('active-page');
         
-        // 2. Buton Stilini Değiştir
+        // 2. Buton Stilini Değiştir (Burada transform/büyütme CSS ile otomatik çalışır)
         navButtons.forEach(btn => btn.classList.remove('active-nav-btn'));
         button.classList.add('active-nav-btn');
-
-        // 3. Alt Çizgiyi Kaydır
-        updateUnderline(button);
     });
 });
 
 
 // ==================== BAŞLANGIÇ AYARI (DOM YÜKLENDİĞİNDE) ====================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Başlangıç butonunu bul
+    // Başlangıç butonunu bul ve aktif stilini ver
     const initialButton = document.querySelector('.nav-btn[data-target="laboratuvar"]');
     
     if (initialButton) {
-        // 2. Butonu aktif stilini ver
         initialButton.classList.add('active-nav-btn');
-        
-        // 3. Çizgiyi doğru konuma ayarla
-        updateUnderline(initialButton);
     }
 });
 
