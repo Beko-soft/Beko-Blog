@@ -53,6 +53,23 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
+        /* SİSTEM İKONLARI */
+        .system-icon {
+            font-size: 1.1em;
+            margin-left: 10px; /* İkonlar arasında boşluk */
+        }
+        /* Kullanıcı İkonu (Genellikle yuvarlak olur) */
+        .system-icon.user {
+            font-size: 1.4em; /* Biraz daha büyük */
+            border: 1px solid white;
+            border-radius: 50%;
+            width: 1.4em;
+            height: 1.4em;
+            line-height: 1.4em;
+            text-align: center;
+        }
+        
+
         /* SOL DİKEY GÖREV ÇUBUĞU (Dash/Dock) - GÖRSELDEKİ İNCE YAPISI */
         #left-dash {
             position: absolute;
@@ -150,7 +167,11 @@
         </div>
         
         <div id="topbar-right" onclick="alert('Sistem Menüsü Açılıyor')">
-            <span style="font-size: 1.2em; margin-right: 5px;">&#x1f50a;</span> <span style="font-size: 1.1em; margin-right: 5px;">&#x1f5fa;</span> <span style="font-size: 1.2em;">&#x25cf;</span> </div>
+            <span class="system-icon">📶</span> 
+            <span class="system-icon">🔊</span>
+            <span class="system-icon">🔋</span>
+            <span class="system-icon user">👤</span> 
+        </div>
     </div>
     
     <div id="left-dash">
@@ -189,9 +210,9 @@
         function updateTime() {
             const now = new Date();
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
-            const dateOptions = { month: 'short', day: 'numeric' };
-
+            
             const day = now.toLocaleDateString('tr-TR', { day: 'numeric' });
+            // 'short' ay ismini alıp noktayı kaldırıyoruz (Eyl, Oca, vb.)
             const month = now.toLocaleDateString('tr-TR', { month: 'short' }).replace('.', '');
             const time = now.toLocaleTimeString('tr-TR', timeOptions);
 
