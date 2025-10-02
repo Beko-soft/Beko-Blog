@@ -3,18 +3,26 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     margin: 0; 
     padding: 0;
-    background-color: #ffc45c; /* Turuncu Arka Plan Rengi */
+    background-color: #ffc45c; /* Turuncu Arka Plan Rengi KESİNLİKLE KORUNDU */
     color: #1e1e1e;
     transition: background-color 0.3s;
 }
 h1 {  
     color: #1e1e1e;
-    text-align: center;
-    margin: 40px auto 20px auto;
+    /* Merkezi hizalamayı kaldırdık, kapsayıcı ortalayacak */
+    margin: 0; 
     width: fit-content;
     border-bottom: 3px solid #1e1e1e;
     padding-bottom: 5px;
 }
+.header-with-button {
+    display: flex; /* H1 ve butonu yan yana getir */
+    align-items: center; /* Dikeyde hizala */
+    justify-content: center; /* Yatayda ortala */
+    margin-top: 40px; 
+    margin-bottom: 20px;
+}
+
 .hidden {
     display: none !important;
 }
@@ -44,7 +52,7 @@ h1 {
     font-weight: bold;
     font-size: 18px;
     padding: 10px 20px;
-    background-color: #925C1F; 
+    background-color: #925C1F; /* Koyu Kahverengi Tema KESİNLİKLE KORUNDU */
     border-radius: 5px;
     transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
@@ -73,12 +81,6 @@ h1 {
     font-size: 14px;
     transition: background-color 0.2s, transform 0.1s;
     margin-left: 20px;
-    vertical-align: middle; 
-}
-
-#fullscreen-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-1px);
 }
 
 /* IFRAME STİLİ */
@@ -91,6 +93,11 @@ h1 {
     display: block;
 }
 
+#fullscreen-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
 /* ==================== BLOG VE SÖZLÜK IZGARASI STİLİ ==================== */
 #content-area { padding: 20px; max-width: 1200px; margin: 0 auto; }
 .content-grid {
@@ -101,6 +108,7 @@ h1 {
     padding: 0;
 }
 .content-grid li {
+    /* Blog kutucukları da temaya uygun kahverengi */
     background-color: #925C1F; 
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -120,8 +128,8 @@ h1 {
     line-height: 1.4;
 }
 .content-grid li:hover { 
-    transform: translateY(-5px);
     background-color: #a06e33;
+    transform: translateY(-5px);
     cursor: pointer;
 }
 
