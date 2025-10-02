@@ -9,8 +9,10 @@
         body {
             margin: 0;
             padding: 0;
-            /* Pardus/GNOME'a yakışan koyu gri/siyah arka plan */
+            /* Pardus varsayılan duvar kağıdına yakın koyu mavi/yeşil tonu */
             background-color: #333d47; 
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23333d47"/><circle cx="50" cy="50" r="40" fill="%23455260"/><path d="M50 50 L80 50 L50 20 Z" fill="%23566573"/><text x="20" y="80" font-size="20" fill="rgba(255,255,255,0.1)">Pardus Klone</text></svg>');
+            background-size: cover;
             color: white;
             font-family: 'Cantarell', 'Segoe UI', Arial, sans-serif;
             height: 100vh;
@@ -19,12 +21,6 @@
             overflow: hidden; 
             position: relative;
         }
-        #desktop-area {
-            flex-grow: 1;
-            padding: 10px;
-            /* Üst çubuğun altında kalması için */
-            padding-top: 40px; 
-        }
         
         /* ÜST GNOME ÇUBUĞU */
         #topbar {
@@ -32,120 +28,160 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 35px;
-            /* GNOME benzeri şeffaf, koyu çubuk */
+            height: 30px;
             background-color: rgba(30, 30, 30, 0.95); 
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 0 10px;
             z-index: 10;
+            font-size: 0.9em;
         }
         
-        /* GNOME AKTİVİTELER BUTONU */
-        #activities-button {
-            height: 30px;
-            padding: 0 10px;
-            /* GNOME/Pardus vurgu rengi */
-            background-color: transparent; 
-            color: #ffc45c; /* Ana sitenin turuncu/sarı vurgusunu taşıdık */
-            border: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        /* ORTA VE SAĞ MENÜLER */
+        #topbar-left, #topbar-center, #topbar-right {
+            display: flex;
+            align-items: center;
         }
-        #activities-button:hover {
+
+        /* SOL DİKEY GÖREV ÇUBUĞU (Dash/Dock) */
+        #left-dash {
+            position: absolute;
+            left: 0;
+            top: 30px; /* Üst panelin hemen altından başla */
+            bottom: 0;
+            width: 50px; /* Dar dikey çubuk */
+            background-color: rgba(30, 30, 30, 0.7); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+            z-index: 9;
+        }
+        
+        .dash-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+        .dash-icon:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+        .dash-icon img {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* MASAÜSTÜ ALANI */
+        #desktop-area {
+            flex-grow: 1;
+            padding-left: 50px; /* Dikey çubuk kadar boşluk bırak */
+            padding-top: 30px; /* Üst çubuk kadar boşluk bırak */
+            width: 100%;
+            box-sizing: border-box;
+            position: absolute; /* Tamamen konumlandırıyoruz */
+            top: 0;
+            left: 0;
+        }
         
-        /* SAAT ALANI ORTADA */
-        #time-widget {
+        /* PENCERE GÖRÜNÜMÜNÜ TAKLİT EDİYORUZ (Pardus Hakkında) */
+        .window {
+            width: 500px;
+            margin: 80px auto;
+            background-color: #f0f0f0;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+        .window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: #3498db; /* Pencere başlık rengi */
+            color: white;
             font-weight: bold;
-            font-size: 0.9em;
         }
-
-        /* SİSTEM MENÜSÜ (Sağda) */
-        #system-menu {
-            font-size: 0.9em;
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1em;
             cursor: pointer;
+            margin-left: 5px;
         }
-
-        /* ÖRNEK MASAÜSTÜ İKONU */
-        .desktop-icon {
-            width: 80px;
+        .window-content {
+            padding: 20px;
             text-align: center;
-            margin: 15px;
-            cursor: pointer;
-            float: left; /* İkonları sola diz */
         }
-        .desktop-icon img {
-            width: 48px;
-            height: 48px;
-            display: block;
-            margin: 0 auto 5px auto;
-            border-radius: 5px; /* Yumuşak GNOME tarzı ikonlar */
-        }
-        .desktop-icon span {
-            font-size: 0.8em;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 1px 4px;
-            border-radius: 3px;
+        .window-content h2 {
+            margin-top: 0;
+            color: #3498db;
         }
     </style>
 </head>
 <body>
     
     <div id="topbar">
-        <button id="activities-button">
-            AKTİVİTELER
-        </button>
-        
-        <div id="time-widget">
+        <div id="topbar-left">Uygulamalar</div>
+        <div id="topbar-center">
             <span id="current-time">10:00 PM</span>
         </div>
-        
-        <div id="system-menu">
-            [ WiFi | Ses | Batarya ]
+        <div id="topbar-right">
+            [ WiFi | Ses | Batarya | Kullanıcı ]
         </div>
     </div>
+    
+    <div id="left-dash">
+        <div class="dash-icon" onclick="alert('Ana Dizin Açılıyor')">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233498db'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🏠</text></svg>" alt="Ev">
+        </div>
+        <div class="dash-icon" onclick="alert('Çöp Açılıyor')">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e74c3c'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🗑</text></svg>" alt="Çöp">
+        </div>
+        <div class="dash-icon" onclick="document.querySelector('.window').style.display='block'">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1c40f'/><text x='50' y='65' font-size='50' fill='black' text-anchor='middle'>🦁</text></svg>" alt="Pardus">
+        </div>
+        </div>
 
     <div id="desktop-area">
-        <div class="desktop-icon">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2327ae60'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>📁</text></svg>" alt="Ana Dizin">
-            <span>Dosyalar</span>
+        <div class="window">
+            <div class="window-header">
+                Bu bilgisayar hakkında
+                <div class="window-controls">
+                    <button>-</button>
+                    <button>□</button>
+                    <button onclick="this.closest('.window').style.display='none'">x</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%233498db'/><text x='50' y='60' font-size='40' fill='white' text-anchor='middle'>🐆</text></svg>" style="width: 80px; height: 80px; margin-bottom: 10px;">
+                <h2>Pardus 21.4 Dolunay</h2>
+                <p>Masaüstü: GNOME 3.38.6</p>
+                <p style="font-size: 0.8em; color: #555;">(Bu simülasyon, Pardus görünümünü taklit etmektedir.)</p>
+            </div>
         </div>
-        <div class="desktop-icon">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233498db'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🌐</text></svg>" alt="Tarayıcı">
-            <span>Tarayıcı</span>
-        </div>
-        
-        </div>
+    </div>
 
     <script>
         // Basit saat güncelleme fonksiyonu
         function updateTime() {
             const now = new Date();
+            const dateString = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
             const timeString = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-time').textContent = `${dateString} ${timeString}`;
         }
         
         // Saati her saniye güncelle
         updateTime(); 
         setInterval(updateTime, 1000);
-        
-        document.getElementById('activities-button').addEventListener('click', () => {
-             alert("Aktiviteler Menüsü açıldı! Gerçek Pardus Klone kodunu buraya yazacaksın.");
-        });
-
-        // İkon tıklama simülasyonu
-        document.querySelectorAll('.desktop-icon').forEach(icon => {
-            icon.addEventListener('click', () => {
-                alert(`Uygulama açılıyor: ${icon.querySelector('span').textContent}`);
-            });
-        });
-
     </script>
 </body>
 </html>
