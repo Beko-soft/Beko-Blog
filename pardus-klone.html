@@ -29,6 +29,7 @@
             left: 0;
             width: 100%;
             height: 30px;
+            /* Hafif şeffaf koyu renk */
             background-color: rgba(30, 30, 30, 0.95); 
             display: flex;
             align-items: center;
@@ -42,15 +43,23 @@
         #topbar-left, #topbar-center, #topbar-right {
             display: flex;
             align-items: center;
+            /* İnce aralıklar */
+            padding: 0 5px; 
+            height: 100%;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+        #topbar-left:hover, #topbar-center:hover, #topbar-right:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* SOL DİKEY GÖREV ÇUBUĞU (Dash/Dock) */
+        /* SOL DİKEY GÖREV ÇUBUĞU (Dash/Dock) - GÖRSELDEKİ İNCE YAPISI */
         #left-dash {
             position: absolute;
             left: 0;
-            top: 30px; /* Üst panelin hemen altından başla */
+            top: 30px; 
             bottom: 0;
-            width: 50px; /* Dar dikey çubuk */
+            width: 50px; 
             background-color: rgba(30, 30, 30, 0.7); 
             display: flex;
             flex-direction: column;
@@ -71,7 +80,7 @@
             transition: background-color 0.1s;
         }
         .dash-icon:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
         }
         .dash-icon img {
             width: 32px;
@@ -81,11 +90,11 @@
         /* MASAÜSTÜ ALANI */
         #desktop-area {
             flex-grow: 1;
-            padding-left: 50px; /* Dikey çubuk kadar boşluk bırak */
-            padding-top: 30px; /* Üst çubuk kadar boşluk bırak */
+            padding-left: 50px; 
+            padding-top: 30px; 
             width: 100%;
             box-sizing: border-box;
-            position: absolute; /* Tamamen konumlandırıyoruz */
+            position: absolute; 
             top: 0;
             left: 0;
         }
@@ -99,20 +108,22 @@
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             overflow: hidden;
+            display: none; /* Başlangıçta gizle */
         }
         .window-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 5px 10px;
-            background-color: #3498db; /* Pencere başlık rengi */
-            color: white;
+            background-color: #f0f0f0; /* Pencere başlık rengi */
+            color: #333;
             font-weight: bold;
+            border-bottom: 1px solid #ddd;
         }
         .window-controls button {
             background: none;
             border: none;
-            color: white;
+            color: #333;
             font-size: 1.1em;
             cursor: pointer;
             margin-left: 5px;
@@ -130,13 +141,16 @@
 <body>
     
     <div id="topbar">
-        <div id="topbar-left">Uygulamalar</div>
+        <div id="topbar-left" onclick="alert('Uygulamalar Menüsü Açılıyor')">
+            Uygulamalar
+        </div>
+        
         <div id="topbar-center">
-            <span id="current-time">10:00 PM</span>
+            <span id="current-time">5 Eyl 10:00</span>
         </div>
-        <div id="topbar-right">
-            [ WiFi | Ses | Batarya | Kullanıcı ]
-        </div>
+        
+        <div id="topbar-right" onclick="alert('Sistem Menüsü Açılıyor')">
+            <span style="font-size: 1.2em; margin-right: 5px;">&#x1f50a;</span> <span style="font-size: 1.1em; margin-right: 5px;">&#x1f5fa;</span> <span style="font-size: 1.2em;">&#x25cf;</span> </div>
     </div>
     
     <div id="left-dash">
@@ -146,24 +160,24 @@
         <div class="dash-icon" onclick="alert('Çöp Açılıyor')">
             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e74c3c'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🗑</text></svg>" alt="Çöp">
         </div>
-        <div class="dash-icon" onclick="document.querySelector('.window').style.display='block'">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1c40f'/><text x='50' y='65' font-size='50' fill='black' text-anchor='middle'>🦁</text></svg>" alt="Pardus">
+        <div class="dash-icon" onclick="document.getElementById('about-window').style.display='block'">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23f1c40f'/><text x='50' y='65' font-size='50' fill='black' text-anchor='middle'>🐆</text></svg>" alt="Pardus">
         </div>
-        </div>
+    </div>
 
     <div id="desktop-area">
-        <div class="window">
+        <div id="about-window" class="window">
             <div class="window-header">
-                Bu bilgisayar hakkında
+                <span style="margin-right: auto;">≡</span> Bu bilgisayar hakkında
                 <div class="window-controls">
-                    <button>-</button>
-                    <button>□</button>
+                    <button style="color:#777;">_</button>
+                    <button style="color:#777;">□</button>
                     <button onclick="this.closest('.window').style.display='none'">x</button>
                 </div>
             </div>
             <div class="window-content">
                 <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%233498db'/><text x='50' y='60' font-size='40' fill='white' text-anchor='middle'>🐆</text></svg>" style="width: 80px; height: 80px; margin-bottom: 10px;">
-                <h2>Pardus 21.4 Dolunay</h2>
+                <h2 style="color: #444;">Pardus 21.4 Dolunay</h2>
                 <p>Masaüstü: GNOME 3.38.6</p>
                 <p style="font-size: 0.8em; color: #555;">(Bu simülasyon, Pardus görünümünü taklit etmektedir.)</p>
             </div>
@@ -171,12 +185,17 @@
     </div>
 
     <script>
-        // Basit saat güncelleme fonksiyonu
+        // Saat ve Tarih güncelleme fonksiyonu (Görseldeki gibi format)
         function updateTime() {
             const now = new Date();
-            const dateString = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
-            const timeString = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('current-time').textContent = `${dateString} ${timeString}`;
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const dateOptions = { month: 'short', day: 'numeric' };
+
+            const day = now.toLocaleDateString('tr-TR', { day: 'numeric' });
+            const month = now.toLocaleDateString('tr-TR', { month: 'short' }).replace('.', '');
+            const time = now.toLocaleTimeString('tr-TR', timeOptions);
+
+            document.getElementById('current-time').textContent = `${day} ${month} ${time}`;
         }
         
         // Saati her saniye güncelle
