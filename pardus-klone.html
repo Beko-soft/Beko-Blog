@@ -5,92 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pardus Klone Arayüzü</title>
     <style>
+        /* ==================== PARDUS KLONE STİLLERİ ==================== */
         body {
             margin: 0;
             padding: 0;
-            background-color: #3b82f6; /* Pardus mavisi/Linux vari arka plan */
+            /* Pardus/Linux masaüstü hissi veren mavi arka plan */
+            background-color: #3d88a1; 
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Cantarell', 'Segoe UI', Arial, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Masaüstü hissi için */
+            overflow: hidden; 
+            position: relative;
         }
         #desktop-area {
             flex-grow: 1;
             padding: 10px;
+            /* Masaüstü içeriğinin çubuğun üstünde kalması için */
+            padding-bottom: 40px; 
         }
+        
+        /* GÖREV ÇUBUĞU */
         #taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             height: 40px;
-            background-color: rgba(0, 0, 0, 0.8);
+            /* Koyu renk, hafif şeffaflık */
+            background-color: rgba(30, 30, 30, 0.95); 
             display: flex;
             align-items: center;
             padding: 0 10px;
-            font-size: 0.9em;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 10;
         }
-        #github-loader {
-            background-color: #f1f1f1;
-            color: #333;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 50px auto;
-            max-width: 600px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        #github-loader input {
-            width: 80%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        #github-loader button {
-            padding: 8px 15px;
-            background-color: #10b981;
+        
+        /* BAŞLAT MENÜSÜ BUTONU (Pardus/KDE Tarzı) */
+        #start-button {
+            height: 30px;
+            padding: 0 15px;
+            background-color: #2ecc71; /* Yeşil vurgu */
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #start-button:hover {
+            background-color: #27ae60;
+        }
+        
+        /* SAAT ALANI */
+        #time-widget {
+            margin-left: auto;
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+
+        /* ÖRNEK MASAÜSTÜ İKONU */
+        .desktop-icon {
+            width: 80px;
+            text-align: center;
+            margin: 15px;
             cursor: pointer;
         }
-        #github-loader button:hover {
-            background-color: #059669;
+        .desktop-icon img {
+            width: 48px;
+            height: 48px;
+            display: block;
+            margin: 0 auto 5px auto;
+        }
+        .desktop-icon span {
+            font-size: 0.8em;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1px 4px;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
     <div id="desktop-area">
-        <div id="github-loader">
-            <h2>GitHub Proje Yükleyici</h2>
-            <p>GitHub bağlantısını girin. Proje klone alanında çalıştırılacaktır.</p>
-            <input type="text" id="repo-url" placeholder="https://github.com/beko/pardus-klone-kodlari">
-            <button onclick="loadProjectFromGithub()">Yükle ve Başlat</button>
-            <p style="margin-top: 15px; font-size: 0.8em; color: #555;">(Bu özellik şu an simülasyondur, asıl klone projesi kodu buraya gelecek.)</p>
+        <div class="desktop-icon">
+             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f39c12'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>~</text></svg>" alt="Ana Dizin">
+            <span>Ana Dizin</span>
+        </div>
+        <div class="desktop-icon">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e74c3c'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🗑</text></svg>" alt="Çöp Kutusu">
+            <span>Çöp Kutusu</span>
         </div>
         
         </div>
 
     <div id="taskbar">
-        <span>Başlat Menüsü</span>
-        <span style="margin-left: auto;">[Saat]</span>
+        <button id="start-button">
+            ▶ Başlat
+        </button>
+        
+        <div id="time-widget">
+            <span id="current-time">10:00 PM</span>
+        </div>
     </div>
 
     <script>
-        function loadProjectFromGithub() {
-            const url = document.getElementById('repo-url').value;
-            if (url.includes("github.com")) {
-                alert(`GitHub'dan proje çekme simülasyonu:\nURL: ${url}\n\n**Gerçek entegrasyon:** Bu alana Klone projenizin tam HTML/CSS/JS kodunu bu aşamadan sonra yazacaksınız.`);
-                
-                // **Gerçek Proje Başlangıcı:**
-                // Klone projenizin başlangıç arayüzünü yükleyen kod buraya gelecek.
-                document.getElementById('github-loader').style.display = 'none';
-                document.getElementById('desktop-area').innerHTML = `
-                    <h1 style="text-align: center;">Pardus Masaüstü Klone Çalışıyor...</h1>
-                    <p style="text-align: center;">Bu alana Klone'un ana ekranını kodlamaya başlayabilirsin.</p>
-                `;
-            } else {
-                alert("Lütfen geçerli bir GitHub URL'si girin.");
-            }
+        // Basit saat güncelleme fonksiyonu
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('current-time').textContent = timeString;
         }
+        
+        // Saati her saniye güncelle
+        updateTime(); 
+        setInterval(updateTime, 1000);
+        
+        document.getElementById('start-button').addEventListener('click', () => {
+             alert("Başlat Menüsü açıldı! Klone projesine buradan devam edebilirsin.");
+        });
+
     </script>
 </body>
 </html>
