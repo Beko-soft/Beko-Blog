@@ -3,13 +3,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     margin: 0; 
     padding: 0;
-    background-color: #ffc45c; /* Turuncu Arka Plan Rengi KESİNLİKLE KORUNDU */
+    background-color: #ffc45c; /* CANLI TURUNCU/SARI TEMA GERİ GELDİ */
     color: #1e1e1e;
     transition: background-color 0.3s;
 }
 h1 {  
     color: #1e1e1e;
-    /* Merkezi hizalamayı kaldırdık, kapsayıcı ortalayacak */
     margin: 0; 
     width: fit-content;
     border-bottom: 3px solid #1e1e1e;
@@ -52,7 +51,7 @@ h1 {
     font-weight: bold;
     font-size: 18px;
     padding: 10px 20px;
-    background-color: #925C1F; /* Koyu Kahverengi Tema KESİNLİKLE KORUNDU */
+    background-color: #925C1F; /* KOYU KAHVERENGİ BUTONLAR GERİ GELDİ */
     border-radius: 5px;
     transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
@@ -86,7 +85,7 @@ h1 {
 /* IFRAME STİLİ */
 #desktop-klone-iframe {
     width: 100%;
-    min-height: 700px; /* Klone için büyük bir alan */
+    min-height: 700px; 
     border: 3px solid #6d4416;
     border-radius: 10px;
     margin-top: 20px;
@@ -108,7 +107,6 @@ h1 {
     padding: 0;
 }
 .content-grid li {
-    /* Blog kutucukları da temaya uygun kahverengi */
     background-color: #925C1F; 
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
