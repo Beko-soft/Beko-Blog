@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pardus Klone Arayüzü</title>
     <style>
-        /* ==================== PARDUS KLONE STİLLERİ ==================== */
+        /* ==================== PARDUS GNOME KLONE STİLLERİ ==================== */
         body {
             margin: 0;
             padding: 0;
-            /* Pardus/Linux masaüstü hissi veren mavi arka plan */
-            background-color: #3d88a1; 
+            /* Pardus/GNOME'a yakışan koyu gri/siyah arka plan */
+            background-color: #333d47; 
             color: white;
             font-family: 'Cantarell', 'Segoe UI', Arial, sans-serif;
             height: 100vh;
@@ -22,50 +22,54 @@
         #desktop-area {
             flex-grow: 1;
             padding: 10px;
-            /* Masaüstü içeriğinin çubuğun üstünde kalması için */
-            padding-bottom: 40px; 
+            /* Üst çubuğun altında kalması için */
+            padding-top: 40px; 
         }
         
-        /* GÖREV ÇUBUĞU */
-        #taskbar {
+        /* ÜST GNOME ÇUBUĞU */
+        #topbar {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 40px;
-            /* Koyu renk, hafif şeffaflık */
+            height: 35px;
+            /* GNOME benzeri şeffaf, koyu çubuk */
             background-color: rgba(30, 30, 30, 0.95); 
             display: flex;
             align-items: center;
-            padding: 0 10px;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            justify-content: space-between;
+            padding: 0 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             z-index: 10;
         }
         
-        /* BAŞLAT MENÜSÜ BUTONU (Pardus/KDE Tarzı) */
-        #start-button {
+        /* GNOME AKTİVİTELER BUTONU */
+        #activities-button {
             height: 30px;
-            padding: 0 15px;
-            background-color: #2ecc71; /* Yeşil vurgu */
-            color: white;
+            padding: 0 10px;
+            /* GNOME/Pardus vurgu rengi */
+            background-color: transparent; 
+            color: #ffc45c; /* Ana sitenin turuncu/sarı vurgusunu taşıdık */
             border: none;
-            border-radius: 5px;
             font-weight: bold;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
+            font-size: 1.1em;
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        #start-button:hover {
-            background-color: #27ae60;
+        #activities-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* SAAT ALANI */
+        /* SAAT ALANI ORTADA */
         #time-widget {
-            margin-left: auto;
+            font-weight: bold;
             font-size: 0.9em;
-            padding: 5px 10px;
+        }
+
+        /* SİSTEM MENÜSÜ (Sağda) */
+        #system-menu {
+            font-size: 0.9em;
+            cursor: pointer;
         }
 
         /* ÖRNEK MASAÜSTÜ İKONU */
@@ -74,43 +78,50 @@
             text-align: center;
             margin: 15px;
             cursor: pointer;
+            float: left; /* İkonları sola diz */
         }
         .desktop-icon img {
             width: 48px;
             height: 48px;
             display: block;
             margin: 0 auto 5px auto;
+            border-radius: 5px; /* Yumuşak GNOME tarzı ikonlar */
         }
         .desktop-icon span {
             font-size: 0.8em;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.5);
             padding: 1px 4px;
             border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div id="desktop-area">
-        <div class="desktop-icon">
-             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f39c12'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>~</text></svg>" alt="Ana Dizin">
-            <span>Ana Dizin</span>
-        </div>
-        <div class="desktop-icon">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e74c3c'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🗑</text></svg>" alt="Çöp Kutusu">
-            <span>Çöp Kutusu</span>
-        </div>
-        
-        </div>
-
-    <div id="taskbar">
-        <button id="start-button">
-            ▶ Başlat
+    
+    <div id="topbar">
+        <button id="activities-button">
+            AKTİVİTELER
         </button>
         
         <div id="time-widget">
             <span id="current-time">10:00 PM</span>
         </div>
+        
+        <div id="system-menu">
+            [ WiFi | Ses | Batarya ]
+        </div>
     </div>
+
+    <div id="desktop-area">
+        <div class="desktop-icon">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2327ae60'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>📁</text></svg>" alt="Ana Dizin">
+            <span>Dosyalar</span>
+        </div>
+        <div class="desktop-icon">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233498db'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle'>🌐</text></svg>" alt="Tarayıcı">
+            <span>Tarayıcı</span>
+        </div>
+        
+        </div>
 
     <script>
         // Basit saat güncelleme fonksiyonu
@@ -124,8 +135,15 @@
         updateTime(); 
         setInterval(updateTime, 1000);
         
-        document.getElementById('start-button').addEventListener('click', () => {
-             alert("Başlat Menüsü açıldı! Klone projesine buradan devam edebilirsin.");
+        document.getElementById('activities-button').addEventListener('click', () => {
+             alert("Aktiviteler Menüsü açıldı! Gerçek Pardus Klone kodunu buraya yazacaksın.");
+        });
+
+        // İkon tıklama simülasyonu
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('click', () => {
+                alert(`Uygulama açılıyor: ${icon.querySelector('span').textContent}`);
+            });
         });
 
     </script>
