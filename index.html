@@ -19,7 +19,10 @@
 
     <main id="content-area">
         <section id="laboratuvar" class="page-content active-page">
-            <h1>SİMULASYON: Linux Masaüstü Klone</h1>
+            <h1 style="display: inline-block;">SİMULASYON: Linux Masaüstü Klone</h1>
+            
+            <button id="fullscreen-btn" onclick="enterFullScreen()">[ ] Tam Ekran Yap</button>
+
             <p><strong>Vizyon:</strong> Ana arayüz bozulmadan, Masaüstü Klone projesi aşağıdaki alanda bağımsız olarak çalışacaktır.</p>
 
             <iframe id="desktop-klone-iframe" src="pardus-klone.html" frameborder="0"></iframe>
@@ -50,5 +53,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="animation.js"></script>
+    
+    <script>
+        function enterFullScreen() {
+            const iframe = document.getElementById('desktop-klone-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) { /* Safari */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* IE11 */
+                iframe.msRequestFullscreen();
+            } else {
+                alert("Tarayıcınız tam ekran özelliğini desteklemiyor.");
+            }
+        }
+    </script>
 </body>
 </html>
